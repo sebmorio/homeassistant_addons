@@ -13,6 +13,8 @@ RUN echo $TZ > /etc/timezone && \
     ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
     dpkg-reconfigure -f noninteractive tzdata
 
+RUN apt-get install -y bash jq
+
 # Définir la branche à récupérer (modifie si nécessaire)
 ARG BRANCH=feat_ws6262
 
