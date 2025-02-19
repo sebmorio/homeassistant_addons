@@ -7,6 +7,12 @@ RUN apt update && apt install -y \
     librtlsdr-dev \
     && rm -rf /var/lib/apt/lists/*
 
+ENV TZ=Europe/Paris
+RUN echo $TZ > /etc/timezone && \
+    apt-get install -y tzdata && \
+    ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
+    dpkg-reconfigure -f noninteractive tzdata
+
 # Définir la branche à récupérer (modifie si nécessaire)
 ARG BRANCH=feat_ws6262
 
