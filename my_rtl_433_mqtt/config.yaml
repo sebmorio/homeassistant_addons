@@ -31,10 +31,11 @@ options:
   mqtt_user: "homeassistant"
   mqtt_password: ""
   usb_device: "/dev/ttyUSB0"  # Choix du port USB
-
 schema:
   mqtt_host: str
   mqtt_port: int
   mqtt_user: str
   mqtt_password: password
   usb_device: str
+
+image: "ghcr.io/sebmorio/rtl_433_mqtt_custom"
