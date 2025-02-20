@@ -13,6 +13,10 @@ pwd
 
 echo "ENV"
 env
+echo "ls -l"
+ls -l .
+echo "ls -l /data"
+ls -l /data
 echo "<<< ${MQTT_URL} >>>"
 echo "Démarrage de rtl_433 avec MQTT..."
 rtl_433 -R -215 -F "${MQTT_URL}" 
