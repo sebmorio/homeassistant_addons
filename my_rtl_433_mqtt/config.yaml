@@ -13,13 +13,28 @@ arch:
   - aarch64
 map:
   - config:rw
+
+# Accès aux périphériques USB
+devices:
+  - "/dev/bus/usb:/dev/bus/usb"  # Accès aux périphériques USB
+  - "/dev/ttyUSB0:/dev/ttyUSB0"  # Exemple : sera remplacé par la config utilisateur
+
+privileged:
+  - SYS_RAWIO
+  - SYS_ADMIN
+  - SYS_MODULE
+
+# Options MQTT et USB configurables via l’interface de Home Assistant
 options:
-  mqtt_host: "homeassistant.local"
+  mqtt_host: "homeassistant"
   mqtt_port: 1883
   mqtt_user: "homeassistant"
   mqtt_password: ""
+  usb_device: "/dev/ttyUSB0"  # Choix du port USB
+
 schema:
   mqtt_host: str
   mqtt_port: int
   mqtt_user: str
-  mqtt_password: str
+  mqtt_password: password
+  usb_device: str

@@ -1,19 +1,20 @@
-# Utilisation de Debian comme base
-FROM debian:latest
+# Étape 1 : Image de base Alpine + dépendances
+FROM alpine:latest AS build
 
-# Installer les dépendances nécessaires
-RUN apt update && apt install -y \
-    git cmake build-essential libusb-1.0-0-dev pkg-config \
+# Installation des outils nécessaires à la compilation
+RUN apk add --no-cache \
+    build-base \
+    git \
+    cmake \
+    libusb-dev \
     librtlsdr-dev \
-    && rm -rf /var/lib/apt/lists/*
+    mosquitto-clients
 
-ENV TZ=Europe/Paris
-RUN echo $TZ > /etc/timezone && \
-    apt-get install -y tzdata && \
-    ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
-    dpkg-reconfigure -f noninteractive tzdata
-
-RUN apt-get install -y bash jq
+# Installation des dépendances nécessaires à l'exécution
+RUN apk add --no-cache \
+    libusb \
+    librtlsdr \
+    mosquitto-clients
 
 # Définir la branche à récupérer (modifie si nécessaire)
 ARG BRANCH=feat_ws6262
@@ -27,9 +28,10 @@ WORKDIR /usr/src/rtl_433
 #RUN mkdir build && cd build && cmake .. && make -j$(nproc) && make install
 RUN mkdir build && cd build && cmake .. && make && make install
 
-# Copie des fichiers de configuration
+# Copie d'un script de démarrage
 COPY run.sh /run.sh
 RUN chmod +x /run.sh
 
 # Exécution automatique
-CMD [ "/run.sh" ]
+ENTRYPOINT ["/run.sh"]
+#CMD [ "/run.sh" ]
