@@ -37,5 +37,3 @@ schema:
   mqtt_user: str
   mqtt_password: password
   usb_device: str
-
-image: "ghcr.io/sebmorio/rtl_433_mqtt_custom"
