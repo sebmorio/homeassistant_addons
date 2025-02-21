@@ -1,7 +1,7 @@
 name: "RTL_433 MQTT Bridge Custom"
-version: "1.0.0"
+version: "0.0.1"
 slug: "rtl_433_mqtt"
-description: "Un add-on pour envoyer les données rtl_433 vers MQTT"
+description: "Recuperation des donnees rtl_433 et integration dans MQTT"
 url: "https://github.com/sebmorio/rtl_433_ha_addon"
 startup: services
 boot: auto
@@ -14,26 +14,23 @@ arch:
 map:
   - config:rw
 
-# Accès aux périphériques USB
+# Acces aux peripheriques USB
 devices:
-  - "/dev/bus/usb:/dev/bus/usb"  # Accès aux périphériques USB
-  - "/dev/ttyUSB0:/dev/ttyUSB0"  # Exemple : sera remplacé par la config utilisateur
+  - ""  # Acces aux peripheriques USB
 
-privileged:
-  - SYS_RAWIO
-  - SYS_ADMIN
-  - SYS_MODULE
+privileged: true
 
-# Options MQTT et USB configurables via l’interface de Home Assistant
+# Options MQTT et USB configurables via l interface de Home Assistant
 options:
-  mqtt_host: "homeassistant"
+  mqtt_host: "homeassistant.local"
   mqtt_port: 1883
-  mqtt_user: "homeassistant"
+  mqtt_user: ""
   mqtt_password: ""
-  usb_device: "/dev/ttyUSB0"  # Choix du port USB
+  usb_device: "/dev/bus/usb/002/003" i# Choix du port USB
 schema:
   mqtt_host: str
   mqtt_port: int
   mqtt_user: str
   mqtt_password: password
   usb_device: str
+

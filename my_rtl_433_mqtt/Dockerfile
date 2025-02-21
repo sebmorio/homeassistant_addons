@@ -8,6 +8,7 @@ RUN apk add --no-cache \
     cmake \
     libusb-dev \
     librtlsdr-dev \
+    jq \
     mosquitto-clients
 
 # Installation des dépendances nécessaires à l'exécution
