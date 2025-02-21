@@ -16,7 +16,7 @@ map:
 
 # Acces aux peripheriques USB
 devices:
-  - ""  # Acces aux peripheriques USB
+  - "{device}:{device}:rwm"  # Acces aux peripheriques USB
 
 privileged: true
 
@@ -26,11 +26,11 @@ options:
   mqtt_port: 1883
   mqtt_user: ""
   mqtt_password: ""
-  usb_device: "/dev/bus/usb/002/003" i# Choix du port USB
+  device: "/dev/bus/usb/002/003" i# Choix du port USB
 schema:
   mqtt_host: str
   mqtt_port: int
   mqtt_user: str
   mqtt_password: password
-  usb_device: str
+  device: str
 
