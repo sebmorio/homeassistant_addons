@@ -1,6 +1,6 @@
 {
   "name": "my_rtl_433_mqtt",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "slug": "my_custom_rtl433_mqtt",
   "description": "Reception des donnees via an SDR dongle rtl_433 et envoi dans base MQTT",
   "url": "https://github.com/sebmorio/homeassistant_addons/",
