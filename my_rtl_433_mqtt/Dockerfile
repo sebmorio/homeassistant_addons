@@ -1,7 +1,8 @@
-# Étape 1 : Image de base Alpine + dépendances
-FROM alpine:latest AS build
+# Etape 1 : Image de base + dependances
+ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:3.19
+FROM $BUILD_FROM as builder
 
-# Installation des outils nécessaires à la compilation
+# Installation des outils necessaires a la compilation
 RUN apk add --no-cache \
     build-base \
     git \
@@ -11,29 +12,26 @@ RUN apk add --no-cache \
     jq \
     mosquitto-clients
 
-# Installation des dépendances nécessaires à l'exécution
+# Installation des dependances necessaires a l'execution
 RUN apk add --no-cache \
     libusb \
     librtlsdr \
     mosquitto-clients
 
-
-# Définir la branche à récupérer (modifie si nécessaire)
+# Definir la branche a recuperer (modifie si nécessaire)
 ARG BRANCH=feat_ws6262
 
 # Cloner ton fork et passer sur la branche
 WORKDIR /usr/src
-RUN git clone --depth 1 -b $BRANCH https://github.com/sebmorio/rtl_433.git rtl_433
+RUN git clone -b $BRANCH https://github.com/sebmorio/rtl_433.git rtl_433
 
 # Compiler rtl_433
 WORKDIR /usr/src/rtl_433
-#RUN mkdir build && cd build && cmake .. && make -j$(nproc) && make install
-RUN mkdir build && cd build && cmake .. && make && make install
+RUN mkdir build && cd build && cmake .. && make -j$(nproc) && make install
 
 # Copie d'un script de démarrage
 COPY run.sh /run.sh
-RUN chmod +x /run.sh
+RUN chmod +x /run.sh       
 
-# Exécution automatique
+# Execution automatique
 ENTRYPOINT ["/run.sh"]
-#CMD [ "/run.sh" ]
