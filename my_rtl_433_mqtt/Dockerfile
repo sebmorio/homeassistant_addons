@@ -21,6 +21,12 @@ RUN apk add --no-cache \
     librtlsdr \
     mosquitto-clients
 
+RUN \
+    pip install \
+        --no-cache-dir \
+        --prefer-binary \
+        paho-mqtt==1.6.1 \
+
 # Definir la branche a recuperer (modifie si nécessaire)
 ARG BRANCH=feat_ws6262
 
