@@ -4,6 +4,7 @@ set -x
 echo "==> Debut"
 date
 source /usr/lib/bashio/bashio.sh
+cp /usr/src/rtl_433/examples/rtl_433_mqtt_hass.py /
 
 if [ ! -z ${MQTT_HOST+x} ]; then
   echo "Running in stand-alone docker mode"
