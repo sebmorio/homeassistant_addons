@@ -30,10 +30,10 @@ RUN git clone -b $BRANCH https://github.com/sebmorio/rtl_433.git rtl_433
 
 # Compiler rtl_433
 WORKDIR /usr/src/rtl_433
-COPY examples/rtl_433_mqtt_hass.py /
 RUN mkdir build && cd build && cmake .. && make -j$(nproc) && make install
 
 # Copie d'un script de démarrage
+COPY examples/rtl_433_mqtt_hass.py /
 COPY run.sh /run.sh
 RUN chmod +x /run.sh       
 
