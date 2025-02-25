@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source /usr/lib/bashio/bashio.sh
+
 if [ ! -z ${MQTT_HOST+x} ]; then
   echo "Running in stand-alone docker mode"
   MQTT_PORT="${MQTT_PORT:-1883}"
