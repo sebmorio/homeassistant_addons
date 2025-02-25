@@ -1,0 +1,29 @@
+{
+  "name": "my_rtl_433_mqtt",
+  "version": "0.0.5",
+  "slug": "my_custom_rtl433_mqtt",
+  "description": "Reception des donnees via an SDR dongle rtl_433 et envoi dans base MQTT",
+  "url": "https://github.com/sebmorio/homeassistant_addons/",
+  "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
+  "startup": "application",
+  "boot": "auto",
+  "init": false,
+  "map": ["config:rw"],
+  "services": ["mqtt:want"],
+  "usb": true,
+  "udev": true,
+  "options": {
+    "retain": true,
+    "mqtt_host": "homeassistant.local",
+    "mqtt_port": "1883",
+    "mqtt_user": "",
+    "mqtt_password": ""
+  },
+  "schema": {
+    "retain": "bool",
+    "mqtt_host": "str",
+    "mqtt_port": "int",
+    "mqtt_user": "str",
+    "mqtt_password": "password"
+  }
+}
