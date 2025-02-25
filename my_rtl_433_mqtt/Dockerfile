@@ -33,7 +33,7 @@ WORKDIR /usr/src/rtl_433
 RUN mkdir build && cd build && cmake .. && make -j$(nproc) && make install
 
 # Copie d'un script de démarrage
-RUN pip install --no-cache-dir --prefer-binary paho-mqtt
+RUN pip install --no-cache-dir paho-mqtt
 
 COPY run.sh /run.sh
 RUN chmod +x /run.sh       
