@@ -39,7 +39,7 @@ RUN apk add --no-cache python3 py3-pip build-base
 RUN python3 -m venv /venv
 
 # Activer l'environnement virtuel et installer paho-mqtt
-RUN /venv/bin/pip install --no-cache-dir paho-mqtt
+RUN /venv/bin/pip install --no-cache-dir paho-mqtt==1.6.1 
 #RUN pip install --no-cache-dir paho-mqtt
 
 # Copie d'un script de démarrage
