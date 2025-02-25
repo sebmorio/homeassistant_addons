@@ -33,7 +33,9 @@ WORKDIR /usr/src/rtl_433
 RUN mkdir build && cd build && cmake .. && make -j$(nproc) && make install
 
 # Copie d'un script de démarrage
-RUN pip install --no-cache-dir paho-mqtt
+#RUN pip install --no-cache-dir paho-mqtt
+RUN pip install --no-cache-dir paho-mqtt || (echo "pip install failed" && tail -n 20 /var/log/pip.log)
+
 
 COPY run.sh /run.sh
 RUN chmod +x /run.sh       
