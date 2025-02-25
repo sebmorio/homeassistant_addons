@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bashio
+#!/usr/bin/with-contenv bash
 
 if [ ! -z ${MQTT_HOST+x} ]; then
   echo "Running in stand-alone docker mode"
