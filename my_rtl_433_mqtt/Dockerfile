@@ -1,5 +1,6 @@
 # Etape 1 : Image de base + dependances
-ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:3.19
+#ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:3.19
+ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:latest
 FROM $BUILD_FROM as builder
 
 # Installation des outils necessaires a la compilation
@@ -9,9 +10,10 @@ RUN apk add --no-cache \
     cmake \
     libusb-dev \
     librtlsdr-dev \
-    jq \
-    s6-overlay\
     mosquitto-clients
+#    jq \
+#    s6-overlay\
+#    mosquitto-clients
 
 # Installation des dependances necessaires a l'execution
 RUN apk add --no-cache \
