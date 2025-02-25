@@ -11,8 +11,9 @@ RUN apk add --no-cache \
     libusb-dev \
     librtlsdr-dev \
     jq \
-    bash \
-    mosquitto-clients
+    bash \ 
+    python3 \
+    py3-pip
 
 # Installation des dependances necessaires a l'execution
 RUN apk add --no-cache \

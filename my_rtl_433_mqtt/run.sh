@@ -1,6 +1,8 @@
 #!/bin/bash
 
 source /usr/lib/bashio/bashio.sh
+ls -l /usr/lib/bashio/bashio.sh
+date
 
 if [ ! -z ${MQTT_HOST+x} ]; then
   echo "Running in stand-alone docker mode"
