@@ -30,8 +30,8 @@ WORKDIR /usr/src/rtl_433
 RUN mkdir build && cd build && cmake .. && make -j$(nproc) && make install
 
 # Copie d'un script de démarrage
-COPY run.sh /auto_run.sh
-RUN chmod +x /auto_run.sh       
+COPY run.sh /run.sh
+RUN chmod +x /run.sh       
 
 # Execution automatique
-ENTRYPOINT ["/auto_run.sh"]
+ENTRYPOINT ["/run.sh"]
