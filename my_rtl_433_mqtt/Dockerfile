@@ -10,6 +10,7 @@ RUN apk add --no-cache \
     libusb-dev \
     librtlsdr-dev \
     jq \
+    s6-overlay\
     mosquitto-clients
 
 # Installation des dependances necessaires a l'execution
