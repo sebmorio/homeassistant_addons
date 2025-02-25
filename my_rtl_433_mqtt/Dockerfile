@@ -32,11 +32,17 @@ RUN git clone -b $BRANCH https://github.com/sebmorio/rtl_433.git rtl_433
 WORKDIR /usr/src/rtl_433
 RUN mkdir build && cd build && cmake .. && make -j$(nproc) && make install
 
-# Copie d'un script de démarrage
+# Installer les dépendances nécessaires
+RUN apk add --no-cache python3 py3-pip build-base
+
+# Créer un environnement virtuel
+RUN python3 -m venv /venv
+
+# Activer l'environnement virtuel et installer paho-mqtt
+RUN /venv/bin/pip install --no-cache-dir paho-mqtt
 #RUN pip install --no-cache-dir paho-mqtt
-RUN pip install --no-cache-dir paho-mqtt || (echo "pip install failed" && tail -n 20 /var/log/pip.log)
 
-
+# Copie d'un script de démarrage
 COPY run.sh /run.sh
 RUN chmod +x /run.sh       
 
