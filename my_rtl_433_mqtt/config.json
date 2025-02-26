@@ -1,7 +1,7 @@
 {
   "name": "My_Custom_rtl433_mqtt",
   "version": "0.1.4",
-  "slug": "MyCustomRTL433MQTT",
+  "slug": "mycustomrtl433mqtt",
   "description": "Receive data from SDR dongle rtl_433 and push in MQTT. (Special feat For My WS6262)",
   "url": "https://github.com/sebmorio/homeassistant_addons/",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
