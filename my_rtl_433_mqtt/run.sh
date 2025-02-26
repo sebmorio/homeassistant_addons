@@ -1,71 +1,26 @@
-#!/bin/bash
-#set -x 
+#!/bin/sh
 
-echo "==> Debut"
+echo "===> DEBUT <==="
 date
-source /usr/lib/bashio/bashio.sh
-cp /usr/src/rtl_433/examples/rtl_433_mqtt_hass.py /
 
-if [ ! -z ${MQTT_HOST+x} ]; then
-  echo "Running in stand-alone docker mode"
-  MQTT_PORT="${MQTT_PORT:-1883}"
-  RTL_TOPIC="${RTL_TOPIC:-rtl_433/+/events}"
-  DISCOVERY_PREFIX="${DISCOVERY_PREFIX:-homeassistant}"
-  DISCOVERY_INTERVAL="${DISCOVERY_INTERVAL:-600}"
-  OTHER_ARGS="${OTHER_ARGS-}"
+MQTT_HOST=$(jq -r '.mqtt_host' /data/options.json)
+MQTT_PORT=$(jq -r '.mqtt_port' /data/options.json)
+MQTT_USER=$(jq -r '.mqtt_user' /data/options.json)
+MQTT_PASS=$(jq -r '.mqtt_password' /data/options.json)
 
-  LOG_LEVEL="${LOG_LEVEL-}"
-  if [[ $LOG_LEVEL == "quiet" ]]; then
-    OTHER_ARGS="${OTHER_ARGS} --quiet"
-  fi
-  if [[ $LOG_LEVEL == "debug" ]]; then
-    OTHER_ARGS="${OTHER_ARGS} --debug"
-  fi
-else
-  if bashio::services.available mqtt; then
-    echo "mqtt found in this Home Assistance instance."
-    MQTT_HOST=$(bashio::services mqtt "host")
-    MQTT_PORT=$(bashio::services mqtt "port")
-    export MQTT_USERNAME=$(bashio::services mqtt "username")
-    export MQTT_PASSWORD=$(bashio::services mqtt "password")
-  else
-    echo "Using an external mqtt broker."
-    MQTT_HOST=$(bashio::config "mqtt_host")
-    MQTT_PORT=$(bashio::config "mqtt_port")
-    export MQTT_USERNAME=$(bashio::config "mqtt_user")
-    export MQTT_PASSWORD=$(bashio::config "mqtt_password")
-  fi
+#MQTT_DEVICE="rtl_433/devices[/type][/model][/subtype][/channel][/id]"
+#MQTT_DEVICE="rtl_433/devices[/model][/channel][/id]"
 
-  RTL_TOPIC=$(bashio::config "rtl_topic")
-  DISCOVERY_PREFIX=$(bashio::config "discovery_prefix")
-  DISCOVERY_INTERVAL=$(bashio::config "discovery_interval")
+#MQTT_URL="mqtt://${MQTT_HOST}:${MQTT_PORT},user=${MQTT_USER},pass=${MQTT_PASS},retain=1,devices=${MQTT_DEVICE}"
+MQTT_URL="mqtt://${MQTT_HOST}:${MQTT_PORT},user=${MQTT_USER},pass=${MQTT_PASS},retain=1"
 
-  OTHER_ARGS=""
-  if bashio::config.true "mqtt_retain"; then
-    OTHER_ARGS="${OTHER_ARGS} --retain"
-  fi
-  if bashio::config.true "force_update"; then
-    OTHER_ARGS="${OTHER_ARGS} --force_update"
-  fi
-  # This is an optional parameter and we don't want to overwrite the defaults
-  DEVICE_TOPIC_SUFFIX=$(bashio::config "device_topic_suffix")
-  if [ ! -z $DEVICE_TOPIC_SUFFIX ]; then
-    OTHER_ARGS="${OTHER_ARGS} -T ${DEVICE_TOPIC_SUFFIX}"
-  fi
+echo "lsusb"
+lsusb
 
-  LOG_LEVEL=$(bashio::config "log_level")
-  if [[ $LOG_LEVEL == "quiet" ]]; then
-    OTHER_ARGS="${OTHER_ARGS} --quiet"
-  fi
-  if [[ $LOG_LEVEL == "debug" ]]; then
-    OTHER_ARGS="${OTHER_ARGS} --debug"
-  fi
-fi
-
-# Set a default port for when the container is being run directly.
-if [ ! -z ${MQTT_PORT+x} ]; then
-  MQTT_PORT="1883"
-fi
-
-echo "Starting rtl_433_mqtt_hass.py..."
-python3 -u /rtl_433_mqtt_hass.py -H $MQTT_HOST -p $MQTT_PORT -R "$RTL_TOPIC" -D "$DISCOVERY_PREFIX" -i $DISCOVERY_INTERVAL $OTHER_ARGS
+cd /usr/src/rtl_433
+git rev-parse --short HEAD
+#echo "<<< ${MQTT_URL} >>>"
+#echo "rtl_433 -R -215 -F ${MQTT_URL} -F log"
+echo "Starting rtl_433 with MQTT..."
+# -215 Suppression d'un equipement qui n'est pas conforme a ma configuration
+rtl_433 -R -215 -F "${MQTT_URL}" -F log
