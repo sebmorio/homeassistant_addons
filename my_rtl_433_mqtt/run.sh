@@ -15,7 +15,7 @@ MQTT_PASS=$(jq -r '.mqtt_password' /data/options.json)
 ##MQTT_URL="mqtt://${MQTT_HOST}:${MQTT_PORT},user=${MQTT_USER},pass=${MQTT_PASS},retain=1"
 
 MQTT_DEVICE="rtl_433/devices[/model][/channel]"
-MQTT_URL="mqtt://${MQTT_HOST}:${MQTT_PORT},user=${MQTT_USER},pass=${MQTT_PASS},retain=1,devices=${MQTT_DEVICE}"
+MQTT_URL="mqtt://${MQTT_HOST}:${MQTT_PORT},user=${MQTT_USER},pass=${MQTT_PASS},retain=1,devices=${MQTT_DEVICE},events=rtl_433/mystation/events"
 
 echo "lsusb"
 lsusb
