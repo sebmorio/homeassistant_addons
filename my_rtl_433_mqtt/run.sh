@@ -12,7 +12,10 @@ MQTT_PASS=$(jq -r '.mqtt_password' /data/options.json)
 #MQTT_DEVICE="rtl_433/devices[/model][/channel][/id]"
 
 #MQTT_URL="mqtt://${MQTT_HOST}:${MQTT_PORT},user=${MQTT_USER},pass=${MQTT_PASS},retain=1,devices=${MQTT_DEVICE}"
-MQTT_URL="mqtt://${MQTT_HOST}:${MQTT_PORT},user=${MQTT_USER},pass=${MQTT_PASS},retain=1"
+##MQTT_URL="mqtt://${MQTT_HOST}:${MQTT_PORT},user=${MQTT_USER},pass=${MQTT_PASS},retain=1"
+
+MQTT_DEVICE="rtl_433/devices[/model][/channel]"
+MQTT_URL="mqtt://${MQTT_HOST}:${MQTT_PORT},user=${MQTT_USER},pass=${MQTT_PASS},retain=1,devices=${MQTT_DEVICE}"
 
 echo "lsusb"
 lsusb
@@ -23,4 +26,5 @@ git rev-parse --short HEAD
 #echo "rtl_433 -R -215 -F ${MQTT_URL} -F log"
 echo "Starting rtl_433 with MQTT..."
 # -215 Suppression d'un equipement qui n'est pas conforme a ma configuration
+echo "<<< ${MQTT_URL} >>>"
 rtl_433 -R -215 -F "${MQTT_URL}" -F log
